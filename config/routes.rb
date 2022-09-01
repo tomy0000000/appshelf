@@ -6,4 +6,6 @@ Rails.application.routes.draw do
 
   resources :apps
   resources :lists
+
+  get '/apps/peak/:id', to: 'apps#peak'
 end

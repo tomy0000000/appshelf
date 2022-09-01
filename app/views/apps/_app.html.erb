@@ -19,4 +19,11 @@
     <%= app.list_id %>
   </p>
 
+  <%= form_with(model: app) do |form| %>
+    <div>
+      <%= form.hidden_field :id %>
+      <%= form.submit %>
+    </div>
+  <% end %>
+
 </div>

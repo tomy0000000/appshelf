@@ -1,27 +1,22 @@
 require 'faraday'
+require 'json'
 
 class AppsController < ApplicationController
-  before_action :set_app, only: %i[show edit update destroy]
+  before_action :set_app, only: %i[show update destroy]
+  before_action :fetch_app, only: %i[peak create update]
 
-  # GET /apps or /apps.json
-  def index
-    @apps = App.all
+  def peak
+    @body = JSON.pretty_generate(@body)
   end
 
   # GET /apps/1 or /apps/1.json
   def show; end
 
-  # GET /apps/new
-  def new
-    @app = App.new
-  end
-
-  # GET /apps/1/edit
-  def edit; end
-
   # POST /apps or /apps.json
   def create
-    @app = App.new(app_params)
+    app_data = @body['results'][0]
+    @app = App.new(_id: app_data['trackId'].to_s, name: app_data['trackName'],
+                   description: app_data['description'], list_id: params[:app][:list_id])
 
     respond_to do |format|
       if @app.save
@@ -36,8 +31,9 @@ class AppsController < ApplicationController
 
   # PATCH/PUT /apps/1 or /apps/1.json
   def update
+    app_data = @body['results'][0]
     respond_to do |format|
-      if @app.update(app_params)
+      if @app.update(name: app_data['trackName'], description: app_data['description'])
         format.html { redirect_to app_url(@app), notice: 'App was successfully updated.' }
         format.json { render :show, status: :ok, location: @app }
       else
@@ -62,6 +58,20 @@ class AppsController < ApplicationController
   # Use callbacks to share common setup or constraints between actions.
   def set_app
     @app = App.find(params[:id])
+  end
+
+  def fetch_app
+    app_id = params[:app] ? params[:app][:id] : params[:id]
+    response = Faraday.get('https://itunes.apple.com/lookup', { id: app_id })
+    @body = JSON.parse(response.body)
+
+    if response.status != 200 || @body['resultCount'].zero?
+      p "App with ID #{app_id} does not exist"
+      @app = App.new
+      flash[:notice] = "App with ID #{app_id} does not exist"
+      render :show, status: :not_found
+      nil
+    end
   end
 
   # Only allow a list of trusted parameters through.
