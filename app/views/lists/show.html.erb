@@ -1,0 +1,24 @@
+<p style="color: green"><%= notice %></p>
+
+<%= render @list %>
+
+<div>
+  <%= link_to "Edit this list", edit_list_path(@list) %> |
+  <%= link_to "Back to lists", lists_path %>
+
+  <%= button_to "Destroy this list", @list, method: :delete %>
+</div>
+
+<section class="section apps">
+  <div class="container">
+    <h2 class="subtitle is-5">
+      <strong><%= @list.apps.count %></strong> Apps
+    </h2>
+    <%= render @list.apps %>
+    <div class="app-form">
+      <hr />
+      <h3 class="subtitle is-3">Add an app</h3>
+      <%= render partial: 'apps/form', locals: { app: @list.apps.build } %>
+    </div>
+  </div>
+</section>
