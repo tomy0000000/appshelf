@@ -5,7 +5,8 @@ Rails.application.routes.draw do
   root 'lists#index'
 
   resources :apps
-  resources :lists
-
   get '/apps/peak/:id', to: 'apps#peak'
+  resources :lists
+  
+  devise_for :users
 end

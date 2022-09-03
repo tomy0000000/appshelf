@@ -2,6 +2,7 @@ require 'faraday'
 require 'json'
 
 class AppsController < ApplicationController
+  before_action :authenticate_user!
   before_action :set_app, only: %i[show update destroy]
   before_action :fetch_app, only: %i[peak create update]
 
