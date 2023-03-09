@@ -14,5 +14,12 @@
     </a>
 </p>
 
-Some apps provide great functionality and user experience, but you might not need them to stay on your device all the time.
-So you put them on the shelf, and have them back when you need them.
+Some apps provide great functionality and user experience, but you might not need them to stay on your device all the time. So you put them on the shelf and have them back when you need them.
+
+## Deploy
+
+The deployment is done automatically by GitHub Actions. You can also deploy manually by running:
+
+```
+fly deploy
+```
