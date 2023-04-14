@@ -2,13 +2,14 @@
 
 <h1>Lists</h1>
 
-<div id="lists">
-  <% @lists.each do |list| %>
-    <%= render list %>
-    <p>
-      <%= link_to "Show this list", list %>
-    </p>
-  <% end %>
-</div>
+<section>
+<%= link_to "New list", new_list_path, role:"button" %>
+</section>
 
-<%= link_to "New list", new_list_path %>
+<div id="lists">
+  <ul>
+    <% @lists.each do |list| %>
+      <%= render list %>
+    <% end %>
+  </ul>
+</div>

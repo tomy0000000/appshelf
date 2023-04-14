@@ -1,7 +1,6 @@
-<%= render @app %>
+<%= link_to "Back to list", @app.list %>
 
-<div>
-  <%= link_to "Back to lists", lists_path %>
+<h1><%= @app.name %></h1>
+<small><%= @app.description %></small>
 
-  <%= button_to "Destroy this app", @app, method: :delete %>
-</div>
+<%= button_to "Remove App", @app, method: :delete %>

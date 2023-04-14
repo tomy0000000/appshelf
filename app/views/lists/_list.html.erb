@@ -1,12 +1,4 @@
-<div id="<%= dom_id list %>">
-  <p>
-    <strong>Name:</strong>
-    <%= list.name %>
-  </p>
-
-  <p>
-    <strong>Description:</strong>
-    <%= list.description %>
-  </p>
-
-</div>
+<li id="<%= dom_id list %>">
+  <strong><%= link_to list.name, list %></strong>
+  : <%= list.description %>
+</li>

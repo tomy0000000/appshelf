@@ -1,29 +1,13 @@
 <div id="<%= dom_id app %>">
-  <p>
-    <strong>Id:</strong>
-    <%= app.id %>
-  </p>
+  <details>
+    <summary><%= app.name %> (<%= app.id %>)</summary>
+    <p><%= app.description %></p>
 
-  <p>
-    <strong>Name:</strong>
-    <%= app.name %>
-  </p>
-
-  <p>
-    <strong>Description:</strong>
-    <%= app.description %>
-  </p>
-
-  <p>
-    <strong>List:</strong>
-    <%= app.list_id %>
-  </p>
-
-  <%= form_with(model: app) do |form| %>
-    <div>
-      <%= form.hidden_field :id %>
-      <%= form.submit %>
-    </div>
-  <% end %>
-
+    <%= form_with(model: app) do |form| %>
+      <div>
+        <%= form.hidden_field :id %>
+        <%= form.submit %>
+      </div>
+    <% end %>
+  </details>
 </div>

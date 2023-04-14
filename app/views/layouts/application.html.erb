@@ -1,18 +1,40 @@
-<!DOCTYPE html>
-<html>
+<!doctype html>
+<html lang="en">
   <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Appshelf</title>
-    <meta name="viewport" content="width=device-width,initial-scale=1">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
-
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
   </head>
 
   <body>
-    <p class="notice"><%= notice %></p>
-    <p class="alert"><%= alert %></p>
-    <%= yield %>
+    <header class="container">
+      <nav>
+        <ul>
+          <li><%= link_to "Appshelf", "/" %></li>
+        </ul>
+        <%# <ul>
+          <li><a href="#">Link</a></li>
+          <li><a href="#">Link</a></li>
+          <li><a href="#" role="button">Button</a></li>
+        </ul> %>
+      </nav>
+    </header>
+    <main class="container">
+      <ins><%= notice %></ins>
+      <p class="alert"><%= alert %></p>
+      <%= yield %>
+    </main>
+    <footer class="container">
+      <small
+        >Built with 💎 Ruby + <a href="https://picocss.com">Pico</a> • by <a href="https://github.com/tomy0000000">Tomy Hsieh</a> • at 🇹🇭 Bangkok, Thailand •
+        <a href="https://github.com/picocss/examples/blob/master/v1-classless/index.html"
+          >Source code</a
+        ></small
+      >
+    </footer>
   </body>
 </html>
