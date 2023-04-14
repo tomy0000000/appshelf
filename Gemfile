@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
@@ -66,6 +68,10 @@ group :development do
 
   # Speed up commands on slow machines / big apps [https://github.com/rails/spring]
   # gem "spring"
+
+  gem 'dockerfile-rails', '>= 1.2'
+  gem 'rubocop', '~> 1.50', require: false
+  gem 'rubocop-rails', '~>2.19', require: false
 end
 
 group :test do
@@ -74,5 +80,3 @@ group :test do
   gem 'selenium-webdriver'
   gem 'webdrivers'
 end
-
-gem "dockerfile-rails", ">= 1.2", :group => :development

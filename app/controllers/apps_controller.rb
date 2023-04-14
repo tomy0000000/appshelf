@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'faraday'
 require 'json'
 
@@ -66,13 +68,13 @@ class AppsController < ApplicationController
     response = Faraday.get('https://itunes.apple.com/lookup', { id: app_id })
     @body = JSON.parse(response.body)
 
-    if response.status != 200 || @body['resultCount'].zero?
-      p "App with ID #{app_id} does not exist"
-      @app = App.new
-      flash[:notice] = "App with ID #{app_id} does not exist"
-      render :show, status: :not_found
-      nil
-    end
+    return unless response.status != 200 || @body['resultCount'].zero?
+
+    Rails.logger.debug { "App with ID #{app_id} does not exist" }
+    @app = App.new
+    flash.now[:notice] = "App with ID #{app_id} does not exist"
+    render :show, status: :not_found
+    nil
   end
 
   # Only allow a list of trusted parameters through.
