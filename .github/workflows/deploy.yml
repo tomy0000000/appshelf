@@ -30,4 +30,4 @@ jobs:
 
       - name: 🔗 Fetch Environment URL
         id: deployment
-        run: fly certs list --json | jq '.[0].Hostname' >> "$GITHUB_OUTPUT"
+        run: flyctl certs list --json | jq '.[0].Hostname' >> "$GITHUB_OUTPUT"
