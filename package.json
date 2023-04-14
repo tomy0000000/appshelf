@@ -1,0 +1,16 @@
+{
+  "name": "appshelf",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "server": "bin/rails server",
+    "format": "bundle exec rubocop -A"
+  },
+  "keywords": [],
+  "author": "Tomy Hsieh <npm@tomy.me> (https://github.com/tomy0000000)",
+  "license": "MIT",
+  "dependencies": {
+    "@picocss/pico": "^1.5.9"
+  }
+}
