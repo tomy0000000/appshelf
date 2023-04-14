@@ -16,11 +16,11 @@
         <ul>
           <li><%= link_to "Appshelf", "/" %></li>
         </ul>
-        <%# <ul>
-          <li><a href="#">Link</a></li>
-          <li><a href="#">Link</a></li>
-          <li><a href="#" role="button">Button</a></li>
-        </ul> %>
+        <ul>
+          <% if user_signed_in? %>
+            <%= button_to "Sign out", destroy_user_session_path, method: :delete %>
+          <% end %>
+        </ul>
       </nav>
     </header>
     <main class="container">
