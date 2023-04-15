@@ -19,7 +19,8 @@ class AppsController < ApplicationController
   def create
     app_data = @body['results'][0]
     @app = App.new(_id: app_data['trackId'].to_s, name: app_data['trackName'],
-                   description: app_data['description'], list_id: params[:app][:list_id])
+                   description: app_data['description'],
+                   artwork: app_data['artworkUrl512'], list_id: params[:app][:list_id])
 
     respond_to do |format|
       if @app.save
@@ -79,6 +80,6 @@ class AppsController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def app_params
-    params.require(:app).permit(:id, :name, :description, :list_id)
+    params.require(:app).permit(:id, :name, :description, :artwork, :list_id)
   end
 end
