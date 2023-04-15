@@ -13,3 +13,10 @@
  *= require_tree .
  *= require_self
  */
+@import url("https://cdn.jsdelivr.net/npm/@picocss/pico@1.5.7/css/pico.min.css");
+
+img.app {
+  width: 144px;
+  height: 144px;
+  border-radius: 23px;
+}
