@@ -52,7 +52,7 @@ class AppsController < ApplicationController
     @app.destroy
 
     respond_to do |format|
-      format.html { redirect_to apps_url, notice: 'App was successfully destroyed.' }
+      format.html { redirect_to @app.list, notice: 'App was successfully destroyed.' }
       format.json { head :no_content }
     end
   end
@@ -73,9 +73,12 @@ class AppsController < ApplicationController
 
     Rails.logger.debug { "App with ID #{app_id} does not exist" }
     @app = App.new
-    flash.now[:notice] = "App with ID #{app_id} does not exist"
-    render :show, status: :not_found
-    nil
+    respond_to do |format|
+      format.html do
+        redirect_to list_url(List.find(params[:app][:list_id])), alert: "App with ID #{app_id} does not exist"
+      end
+      format.json { head :no_content }
+    end
   end
 
   # Only allow a list of trusted parameters through.
