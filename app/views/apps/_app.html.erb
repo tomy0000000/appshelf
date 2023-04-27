@@ -1,13 +1,4 @@
-<div id="<%= dom_id app %>">
-  <details>
-    <summary><%= app.name %> (<%= app.id %>)</summary>
-    <p><%= app.description %></p>
-
-    <%= form_with(model: app) do |form| %>
-      <div>
-        <%= form.hidden_field :id %>
-        <%= form.submit %>
-      </div>
-    <% end %>
-  </details>
-</div>
+<li id="<%= dom_id app %>">
+  <img src="<%= app.artwork %>" alt="Icon of <%= app.name %>" class="app" />
+  <%= link_to app.name, app %>
+</li>

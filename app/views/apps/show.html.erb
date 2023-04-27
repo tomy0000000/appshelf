@@ -1,6 +1,16 @@
-<%= link_to "Back to list", @app.list %>
+<section>
+  <%= link_to "Back to list", @app.list %>
+</section>
 
-<h1><%= @app.name %></h1>
-<small><%= @app.description %></small>
+<section>
+  <img src="<%= @app.artwork %>" alt="Icon of <%= @app.name %>" class="app" />
+  <h1><a href="https://apps.apple.com/app/id<%= @app.id %>"><%= @app.name %></a></h1>
+</section>
 
-<%= button_to "Remove App", @app, method: :delete %>
+<section>
+  <%= link_to "Delete", @app, role: "button", class: "danger", data: { turbo_method: :delete, turbo_confirm: 'Are you sure?', disable_with: "Deleting..." } %>
+</section>
+
+<section>
+  <p><%= @app.description %></p>
+</section>

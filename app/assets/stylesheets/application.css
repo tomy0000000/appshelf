@@ -13,7 +13,25 @@
  *= require_tree .
  *= require_self
  */
-@import url("https://cdn.jsdelivr.net/npm/@picocss/pico@1.5.7/css/pico.min.css");
+
+:root {
+  --spacing: 0.5rem;
+  --danger: #dc3545;
+}
+
+a.danger {
+  --primary: #bb2d3b;
+  --primary-hover: var(--danger);
+  --primary-focus: #b02a37;
+}
+
+p.danger {
+  color: var(--danger);
+}
+
+footer {
+  text-align: center;
+}
 
 img.app {
   width: 144px;

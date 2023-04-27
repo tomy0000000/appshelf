@@ -1,15 +1,11 @@
-<p style="color: green"><%= notice %></p>
-
-<h1>Lists</h1>
-
 <section>
 <%= link_to "New list", new_list_path, role:"button" %>
 </section>
 
-<div id="lists">
+<section>
   <ul>
     <% @lists.each do |list| %>
       <%= render list %>
     <% end %>
   </ul>
-</div>
+</section>

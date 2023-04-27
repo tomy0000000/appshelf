@@ -3,18 +3,20 @@
   <strong><%= @list.apps.count %></strong> Apps
 </small>
 
-<div>
+<section>
   <%= link_to "Edit", edit_list_path(@list), role: "button" %>
-  <%= link_to "Delete", @list, role: "button", data: { turbo_method: :delete, turbo_confirm: 'Are you sure?', disable_with: "Deleting..." } %>
-</div>
+  <%= link_to "Delete", @list, role: "button", class: "danger", data: { turbo_method: :delete, turbo_confirm: 'Are you sure?', disable_with: "Deleting..." } %>
+</section>
 
 <section>
-  <figure>
+  <ul>
     <%= render @list.apps %>
-  </figure>
-  <div>
-    <hr/>
-    <h3>Add an app</h3>
-    <%= render partial: 'apps/form', locals: { app: @list.apps.build } %>
-  </div>
+  </ul>
+</section>
+
+<hr/>
+
+<section>
+  <h3>Add an app</h3>
+  <%= render partial: 'apps/form', locals: { app: @list.apps.build } %>
 </section>

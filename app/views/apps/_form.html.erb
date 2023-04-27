@@ -1,26 +1,13 @@
 <%= form_with(model: app) do |form| %>
-  <% if app.errors.any? %>
-    <div style="color: red">
-      <h2><%= pluralize(app.errors.count, "error") %> prohibited this app from being saved:</h2>
-
-      <ul>
-        <% app.errors.each do |error| %>
-          <li><%= error.full_message %></li>
-        <% end %>
-      </ul>
-    </div>
+  <%= form.label :id, "App ID" %>
+  <%= form.text_field :id, value: nil, "aria-invalid": app.errors[:id].any? ? true : nil %>
+  <% if app.errors[:id].any? %>
+    <% app.errors.full_messages_for(:id).each do |error| %>
+      <p class="danger"><small><%= error %></small></p>
+    <% end %>
   <% end %>
 
-  <div>
-    <%= form.label :id, style: "display: block" %>
-    <%= form.text_field :id %>
-  </div>
+  <%= form.hidden_field :list_id %>
 
-  <div>
-    <%= form.hidden_field :list_id %>
-  </div>
-
-  <div>
-    <%= form.submit %>
-  </div>
+  <%= form.submit %>
 <% end %>

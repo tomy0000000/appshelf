@@ -6,6 +6,7 @@
     <title>Appshelf</title>
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1.5.10/css/pico.min.css" integrity="sha256-AmkBgnWRWgRJIBCpCCmwuc/mbOWTWKepkFXimo1nQqk=" crossorigin="anonymous">
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
   </head>
@@ -18,14 +19,14 @@
         </ul>
         <ul>
           <% if user_signed_in? %>
-            <%= link_to "Sign out", destroy_user_session_path, data: { turbo_method: :delete, turbo_confirm: 'Are you sure?' } %>
+            <%= link_to "Sign out", destroy_user_session_path, data: { turbo_method: :delete, turbo_confirm: 'Are you sure you want to sign out?' } %>
           <% end %>
         </ul>
       </nav>
     </header>
     <main class="container">
       <ins><%= notice %></ins>
-      <p class="alert"><%= alert %></p>
+      <p class="danger"><%= alert %></p>
       <%= yield %>
     </main>
     <footer class="container">

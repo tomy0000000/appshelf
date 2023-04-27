@@ -1,10 +1,11 @@
-<h1>Editing list</h1>
+<section>
+  <%= link_to "Cancel", @list %>
+</section>
 
-<%= render "form", list: @list %>
+<section>
+  <h1>Editing list</h1>
+</section>
 
-<br>
-
-<div>
-  <%= link_to "Show this list", @list %> |
-  <%= link_to "Back to lists", lists_path %>
-</div>
+<section>
+  <%= render "form", list: @list %>
+</section>

@@ -1,9 +1,11 @@
-<h1>New list</h1>
-
-<%= render "form", list: @list %>
-
-<br>
-
-<div>
+<section>
   <%= link_to "Back to lists", lists_path %>
-</div>
+</section>
+
+<section>
+  <h1>New list</h1>
+</section>
+
+<section>
+  <%= render "form", list: @list %>
+</section>
