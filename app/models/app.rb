@@ -8,4 +8,6 @@ class App
   field :description, type: String
   field :artwork, type: String
   belongs_to :list
+
+  validates :id, presence: true
 end

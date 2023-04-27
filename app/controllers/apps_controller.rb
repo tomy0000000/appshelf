@@ -52,7 +52,7 @@ class AppsController < ApplicationController
     @app.destroy
 
     respond_to do |format|
-      format.html { redirect_to @app.list, notice: 'App was successfully destroyed.' }
+      format.html { redirect_to @app.list, status: :see_other, notice: 'App deleted.' }
       format.json { head :no_content }
     end
   end
