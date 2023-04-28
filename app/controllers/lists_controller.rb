@@ -3,10 +3,11 @@
 class ListsController < ApplicationController
   before_action :authenticate_user!
   before_action :set_list_apps, only: %i[show edit update destroy]
+  before_action :check_user, only: %i[show edit update destroy]
 
   # GET /lists or /lists.json
   def index
-    @lists = List.all
+    @lists = List.where(user_id: current_user.id)
   end
 
   # GET /lists/1 or /lists/1.json
@@ -66,8 +67,14 @@ class ListsController < ApplicationController
     @apps = App.find(@list.entries.map(&:app_id))
   end
 
+  def check_user
+    return unless @list.user_id != current_user.id
+
+    render file: Rails.public_path.join('404.html'), status: :not_found, layout: false
+  end
+
   # Only allow a list of trusted parameters through.
   def list_params
-    params.require(:list).permit(:name, :description)
+    params.require(:list).permit(:name, :description, :user_id)
   end
 end

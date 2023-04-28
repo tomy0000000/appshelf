@@ -10,5 +10,7 @@
   <%= form.label :description %>
   <%= form.text_area :description %>
 
+  <%= form.hidden_field :user_id, value: current_user.id %>
+
   <%= form.submit %>
 <% end %>
