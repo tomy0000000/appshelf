@@ -3,6 +3,7 @@
 class EntriesController < ApplicationController
   before_action :authenticate_user!
   before_action :set_entry, only: %i[show update destroy]
+  before_action :set_app, only: %i[create]
 
   # GET /entries/1 or /entries/1.json
   def show; end
@@ -10,16 +11,7 @@ class EntriesController < ApplicationController
   # POST /entries or /entries.json
   def create
     @entry = Entry.new(entry_params)
-    @entry.app = App.where(id: params['entry'][:app_id]).first
-
-    if @entry.app.nil?
-      fetch_app(@entry.app.id)
-      @entry.app = App.create(id: params['entry'][:app_id])
-      @entry.app.name = @body['results'][0]['trackName']
-      @entry.app.description = @body['results'][0]['description']
-      @entry.app.artwork = @body['results'][0]['artworkUrl512']
-      @entry.app.save!
-    end
+    @entry.app = @app
 
     respond_to do |format|
       if @entry.save!
@@ -62,18 +54,30 @@ class EntriesController < ApplicationController
     @entry = Entry.find(params[:id])
   end
 
-  def fetch_app(app_id)
+  def set_app
+    app_id = params['entry'][:app_id]
+    @app = App.where(id: app_id).first
+
+    return unless @app.nil?
+
+    Rails.logger.debug { 'NEW APP' }
     response = Faraday.get('https://itunes.apple.com/lookup', { id: app_id })
     @body = JSON.parse(response.body)
 
-    return unless response.status != 200 || @body['resultCount'].zero?
-
-    Rails.logger.debug { "App with ID #{app_id} does not exist" }
-    respond_to do |format|
-      format.html do
-        redirect_to list_url(List.find(params[:app][:list_id])), alert: "App with ID #{app_id} does not exist"
+    if response.status != 200 || @body['resultCount'].zero?
+      Rails.logger.debug { "App with ID #{app_id} does not exist" }
+      respond_to do |format|
+        format.html do
+          redirect_to list_url(List.find(params['entry'][:list_id])), alert: "App with ID #{app_id} does not exist"
+        end
+        format.json { head :no_content }
       end
-      format.json { head :no_content }
+    else
+      @app = App.create(id: app_id)
+      @app.name = @body['results'][0]['trackName']
+      @app.description = @body['results'][0]['description']
+      @app.artwork = @body['results'][0]['artworkUrl512']
+      @app.save!
     end
   end
 
