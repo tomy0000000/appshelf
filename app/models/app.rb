@@ -7,7 +7,8 @@ class App
   field :name, type: String
   field :description, type: String
   field :artwork, type: String
-  belongs_to :list
+  has_many :entries, dependent: :destroy
+  has_many :lists, dependent: nil
 
-  validates :id, presence: true
+  # validates :id, presence: true
 end

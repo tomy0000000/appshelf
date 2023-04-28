@@ -1,0 +1,13 @@
+<%= form_with(model: entry) do |form| %>
+  <%= form.label :app_id, "App ID" %>
+  <%= form.text_field :app_id, value: nil, "aria-invalid": entry.errors[:app_id].any? ? true : nil %>
+  <% if entry.errors[:app_id].any? %>
+    <% entry.errors.full_messages_for(:app_id).each do |error| %>
+      <p class="danger"><small><%= error %></small></p>
+    <% end %>
+  <% end %>
+
+  <%= form.hidden_field :list_id %>
+
+  <%= form.submit "Add App" %>
+<% end %>

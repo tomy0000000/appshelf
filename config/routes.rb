@@ -9,6 +9,7 @@ Rails.application.routes.draw do
   resources :apps
   get '/apps/peak/:id', to: 'apps#peak'
   resources :lists
+  resources :entries
 
   devise_for :users
 end

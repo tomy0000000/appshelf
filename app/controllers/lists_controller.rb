@@ -2,7 +2,7 @@
 
 class ListsController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_list, only: %i[show edit update destroy]
+  before_action :set_list_apps, only: %i[show edit update destroy]
 
   # GET /lists or /lists.json
   def index
@@ -53,7 +53,7 @@ class ListsController < ApplicationController
     @list.destroy
 
     respond_to do |format|
-      format.html { redirect_to lists_url, status: :see_other, notice: 'List was successfully destroyed.' }
+      format.html { redirect_to lists_url, notice: 'List was successfully destroyed.' }
       format.json { head :no_content }
     end
   end
@@ -61,8 +61,9 @@ class ListsController < ApplicationController
   private
 
   # Use callbacks to share common setup or constraints between actions.
-  def set_list
+  def set_list_apps
     @list = List.find(params[:id])
+    @apps = App.find(@list.entries.map(&:app_id))
   end
 
   # Only allow a list of trusted parameters through.

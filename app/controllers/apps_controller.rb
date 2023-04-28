@@ -5,8 +5,7 @@ require 'json'
 
 class AppsController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_app, only: %i[show update destroy]
-  before_action :fetch_app, only: %i[peak create update]
+  before_action :set_app_lists, only: %i[show update destroy]
 
   def peak
     @body = JSON.pretty_generate(@body)
@@ -14,24 +13,6 @@ class AppsController < ApplicationController
 
   # GET /apps/1 or /apps/1.json
   def show; end
-
-  # POST /apps or /apps.json
-  def create
-    app_data = @body['results'][0]
-    @app = App.new(_id: app_data['trackId'].to_s, name: app_data['trackName'],
-                   description: app_data['description'],
-                   artwork: app_data['artworkUrl512'], list_id: params[:app][:list_id])
-
-    respond_to do |format|
-      if @app.save
-        format.html { redirect_to app_url(@app), notice: 'App was successfully created.' }
-        format.json { render :show, status: :created, location: @app }
-      else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @app.errors, status: :unprocessable_entity }
-      end
-    end
-  end
 
   # PATCH/PUT /apps/1 or /apps/1.json
   def update
@@ -52,7 +33,7 @@ class AppsController < ApplicationController
     @app.destroy
 
     respond_to do |format|
-      format.html { redirect_to @app.list, status: :see_other, notice: 'App deleted.' }
+      format.html { redirect_to root_path, status: :see_other, notice: 'App deleted.' }
       format.json { head :no_content }
     end
   end
@@ -60,25 +41,9 @@ class AppsController < ApplicationController
   private
 
   # Use callbacks to share common setup or constraints between actions.
-  def set_app
+  def set_app_lists
     @app = App.find(params[:id])
-  end
-
-  def fetch_app
-    app_id = params[:app] ? params[:app][:id] : params[:id]
-    response = Faraday.get('https://itunes.apple.com/lookup', { id: app_id })
-    @body = JSON.parse(response.body)
-
-    return unless response.status != 200 || @body['resultCount'].zero?
-
-    Rails.logger.debug { "App with ID #{app_id} does not exist" }
-    @app = App.new
-    respond_to do |format|
-      format.html do
-        redirect_to list_url(List.find(params[:app][:list_id])), alert: "App with ID #{app_id} does not exist"
-      end
-      format.json { head :no_content }
-    end
+    @list = List.find(@app.entries.map(&:list_id))
   end
 
   # Only allow a list of trusted parameters through.

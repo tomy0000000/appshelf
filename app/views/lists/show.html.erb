@@ -1,6 +1,6 @@
 <h1><%= @list.name %></h1>
 <small>
-  <strong><%= @list.apps.count %></strong> Apps
+  <strong><%= pluralize(@list.entries.count, "App")%></strong>
 </small>
 
 <section>
@@ -10,7 +10,7 @@
 
 <section>
   <ul>
-    <%= render @list.apps %>
+    <%= render @list.entries %>
   </ul>
 </section>
 
@@ -18,5 +18,5 @@
 
 <section>
   <h3>Add an app</h3>
-  <%= render partial: 'apps/form', locals: { app: @list.apps.build } %>
+  <%= render partial: 'entries/form', locals: { entry: @list.entries.build } %>
 </section>

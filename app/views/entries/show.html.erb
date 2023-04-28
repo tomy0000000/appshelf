@@ -1,0 +1,16 @@
+<section>
+  <%= link_to "Back to #{@entry.list.name}", @entry.list %>
+</section>
+
+<section>
+  <img src="<%= @entry.app.artwork %>" alt="Icon of <%= @entry.app.name %>" class="app" />
+  <h1><a href="https://apps.apple.com/app/id<%= @entry.app.id %>"><%= @entry.app.name %></a></h1>
+</section>
+
+<section>
+  <%= link_to "Delete", @entry, role: "button", class: "danger", data: { turbo_method: :delete, turbo_confirm: 'Are you sure?', disable_with: "Deleting..." } %>
+</section>
+
+<section>
+  <p><%= @entry.app.description %></p>
+</section>
