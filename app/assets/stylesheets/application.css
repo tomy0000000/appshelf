@@ -29,6 +29,10 @@ p.danger {
   color: var(--danger);
 }
 
+img.brand {
+  height: 3rem;
+}
+
 footer {
   text-align: center;
 }

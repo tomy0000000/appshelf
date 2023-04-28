@@ -3,7 +3,23 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Appshelf</title>
+    <title>AppShelf - Decent shelf for decent apps</title>
+    <meta name="title" content="AppShelf - Decent shelf for decent apps">
+    <meta name="description" content="Some apps provide great functionality and user experience, but you might not need them to stay on your device all the time. So you put them on the shelf and have them back when you need them.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="<%= root_url %>">
+    <meta property="og:title" content="AppShelf - Decent shelf for decent apps">
+    <meta property="og:description" content="Some apps provide great functionality and user experience, but you might not need them to stay on your device all the time. So you put them on the shelf and have them back when you need them.">
+    <meta property="og:image" content="<%= asset_path("opengraph.png") %>">
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="<%= root_url %>">
+    <meta property="twitter:title" content="AppShelf - Decent shelf for decent apps">
+    <meta property="twitter:description" content="Some apps provide great functionality and user experience, but you might not need them to stay on your device all the time. So you put them on the shelf and have them back when you need them.">
+    <meta property="twitter:image" content="<%= asset_path("opengraph.png") %>">
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="manifest" href="/site.webmanifest">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1.5.10/css/pico.min.css" integrity="sha256-AmkBgnWRWgRJIBCpCCmwuc/mbOWTWKepkFXimo1nQqk=" crossorigin="anonymous">
@@ -15,12 +31,18 @@
     <header class="container">
       <nav>
         <ul>
-          <li><%= link_to "Appshelf", root_path %></li>
+          <li>
+            <%= link_to root_path do %>
+              <%= image_tag "logo.png", class: "brand" %>
+            <% end %>
+          </li>
         </ul>
         <ul>
-          <% if user_signed_in? %>
-            <%= link_to "Sign out", destroy_user_session_path, data: { turbo_method: :delete, turbo_confirm: 'Are you sure you want to sign out?' } %>
-          <% end %>
+          <li>
+            <% if user_signed_in? %>
+              <%= link_to "Sign out", destroy_user_session_path, data: { turbo_method: :delete, turbo_confirm: 'Are you sure you want to sign out?' } %>
+            <% end %>
+          </li>
         </ul>
       </nav>
     </header>
