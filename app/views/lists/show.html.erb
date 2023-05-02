@@ -1,8 +1,8 @@
 <section>
-  <h1><%= @list.name %></h1>
-  <small>
-    <%= pluralize(@list.entries.count, "App")%> By <strong><%= @list.user.username %></strong>
-  </small>
+  <hgroup>
+    <h2><%= @list.name %></h2>
+    <h3><%= pluralize(@list.entries.count, "App")%> By <strong><%= @list.user.username %></strong></h3>
+  </hgroup>
 </section>
 
 <% if current_user and @list.user_id == current_user.id %>
