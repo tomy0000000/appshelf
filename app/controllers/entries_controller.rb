@@ -15,7 +15,7 @@ class EntriesController < ApplicationController
 
     respond_to do |format|
       if @entry.save!
-        format.html { redirect_to list_url(@entry.list), notice: 'App was successfully added.' }
+        format.html { redirect_to list_url(@entry.list), notice: "#{@app.name} was successfully added." }
         format.json { render :show, status: :created, location: @entry }
       else
         format.html { redirect_to list_url(@entry.list), status: :unprocessable_entity }

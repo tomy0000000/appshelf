@@ -15,8 +15,11 @@
  */
 
 :root {
-  --spacing: 0.5rem;
   --danger: #dc3545;
+}
+
+footer {
+  text-align: center;
 }
 
 a.danger {
@@ -29,12 +32,23 @@ p.danger {
   color: var(--danger);
 }
 
+p.app-description {
+  white-space: pre-wrap;
+}
+
 img.brand {
   height: 3rem;
 }
 
-footer {
-  text-align: center;
+ul.entries {
+  padding: 0;
+}
+
+ul.entries li {
+  display: flex;
+  gap: var(--grid-spacing-horizontal);
+  align-items: center;
+  margin-bottom: var(--typography-spacing-vertical);
 }
 
 img.app {
