@@ -10,6 +10,13 @@
   <%= form.label :description %>
   <%= form.text_area :description %>
 
+  <fieldset>
+    <%= form.label :public, for: "switch" do %>
+      <%= form.check_box :public, role: "switch" %>
+      <%= "#{:public.capitalize()}" %>
+    <% end %>
+  </fieldset>
+
   <%= form.hidden_field :user_id, value: current_user.id %>
 
   <%= form.submit %>

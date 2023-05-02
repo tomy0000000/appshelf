@@ -5,6 +5,7 @@ class List
   include Mongoid::Timestamps
   field :name, type: String
   field :description, type: String
+  field :public, type: Boolean, default: false
   has_many :entries, dependent: :destroy
   has_many :apps, dependent: nil
   belongs_to :user

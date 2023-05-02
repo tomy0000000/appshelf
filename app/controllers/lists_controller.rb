@@ -1,9 +1,10 @@
 # frozen_string_literal: true
 
 class ListsController < ApplicationController
-  before_action :authenticate_user!
+  before_action :authenticate_user!, except: %i[show]
   before_action :set_list_apps, only: %i[show edit update destroy]
-  before_action :check_user, only: %i[show edit update destroy]
+  before_action :check_view, only: %i[show]
+  before_action :check_edit, only: %i[edit update destroy]
 
   # GET /lists or /lists.json
   def index
@@ -67,14 +68,20 @@ class ListsController < ApplicationController
     @apps = App.find(@list.entries.map(&:app_id))
   end
 
-  def check_user
-    return unless @list.user_id != current_user.id
+  def check_view
+    return if @list.public || @list.user_id == current_user.id
+
+    render file: Rails.public_path.join('404.html'), status: :not_found, layout: false
+  end
+
+  def check_edit
+    return if @list.user_id == current_user.id
 
     render file: Rails.public_path.join('404.html'), status: :not_found, layout: false
   end
 
   # Only allow a list of trusted parameters through.
   def list_params
-    params.require(:list).permit(:name, :description, :user_id)
+    params.require(:list).permit(:name, :description, :user_id, :public)
   end
 end

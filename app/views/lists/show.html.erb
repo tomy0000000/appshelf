@@ -1,12 +1,16 @@
-<h1><%= @list.name %></h1>
-<small>
-  <strong><%= pluralize(@list.entries.count, "App")%></strong>
-</small>
-
 <section>
-  <%= link_to "Edit", edit_list_path(@list), role: "button" %>
-  <%= link_to "Delete", @list, role: "button", class: "danger", data: { turbo_method: :delete, turbo_confirm: 'Are you sure?', disable_with: "Deleting..." } %>
+  <h1><%= @list.name %></h1>
+  <small>
+    <%= pluralize(@list.entries.count, "App")%> By <strong><%= @list.user.username %></strong>
+  </small>
 </section>
+
+<% if current_user and @list.user_id == current_user.id %>
+  <section>
+    <%= link_to "Edit", edit_list_path(@list), role: "button" %>
+    <%= link_to "Delete", @list, role: "button", class: "danger", data: { turbo_method: :delete, turbo_confirm: 'Are you sure?', disable_with: "Deleting..." } %>
+  </section>
+<% end %>
 
 <section>
   <ul class="entries">
@@ -14,9 +18,10 @@
   </ul>
 </section>
 
-<hr/>
-
-<section>
-  <h3>Add an app</h3>
-  <%= render partial: 'entries/form', locals: { entry: @list.entries.build } %>
-</section>
+<% if current_user and @list.user_id == current_user.id %>
+  <hr/>
+  <section>
+    <h3>Add an app</h3>
+    <%= render partial: 'entries/form', locals: { entry: @list.entries.build } %>
+  </section>
+<% end %>
