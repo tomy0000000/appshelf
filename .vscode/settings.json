@@ -1,0 +1,6 @@
+{
+  "files.exclude": {
+    "bin/**": true, // binaries to use, but not edit
+    "lib/**": true // legacy usage, don't use this
+  }
+}
