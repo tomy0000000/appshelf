@@ -1,9 +1,11 @@
 # frozen_string_literal: true
 
 class EntriesController < ApplicationController
-  before_action :authenticate_user!
+  before_action :authenticate_user!, except: %i[show]
   before_action :set_entry, only: %i[show edit update destroy]
   before_action :init_app, only: %i[create]
+  before_action :check_view, only: %i[show]
+  before_action :check_edit, only: %i[edit update destroy]
 
   # GET /entries/1 or /entries/1.json
   def show; end
@@ -82,6 +84,18 @@ class EntriesController < ApplicationController
       @app.artwork = @body['results'][0]['artworkUrl512']
       @app.save!
     end
+  end
+
+  def check_view
+    return if @entry.list.public || (current_user && @entry.list.user_id == current_user.id)
+
+    render file: Rails.public_path.join('404.html'), status: :not_found, layout: false
+  end
+
+  def check_edit
+    return if @entry.list.user_id == current_user.id
+
+    render file: Rails.public_path.join('404.html'), status: :not_found, layout: false
   end
 
   # Only allow a list of trusted parameters through.

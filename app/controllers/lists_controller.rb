@@ -69,7 +69,7 @@ class ListsController < ApplicationController
   end
 
   def check_view
-    return if @list.public || @list.user_id == current_user.id
+    return if @list.public || (current_user && @list.user_id == current_user.id)
 
     render file: Rails.public_path.join('404.html'), status: :not_found, layout: false
   end

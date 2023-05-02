@@ -7,10 +7,12 @@
   <h1><a href="https://apps.apple.com/app/id<%= @entry.app.id %>" target="_blank"><%= @entry.app.name %></a></h1>
 </section>
 
-<section>
-  <%= link_to "Edit", edit_entry_path(@entry), role: "button" %>
-  <%= link_to "Remove from #{@entry.list.name}", @entry, role: "button", class: "danger", data: { turbo_method: :delete, turbo_confirm: 'Are you sure?', disable_with: "Deleting..." } %>
-</section>
+<% if current_user and @list.user_id == current_user.id %>
+  <section>
+    <%= link_to "Edit", edit_entry_path(@entry), role: "button" %>
+    <%= link_to "Remove from #{@entry.list.name}", @entry, role: "button", class: "danger", data: { turbo_method: :delete, turbo_confirm: 'Are you sure?', disable_with: "Deleting..." } %>
+  </section>
+<% end %>
 
 <section>
   <% if @entry.remark %>
