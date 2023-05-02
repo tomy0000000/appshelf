@@ -2,11 +2,14 @@
 
 class EntriesController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_entry, only: %i[show update destroy]
-  before_action :set_app, only: %i[create]
+  before_action :set_entry, only: %i[show edit update destroy]
+  before_action :init_app, only: %i[create]
 
   # GET /entries/1 or /entries/1.json
   def show; end
+
+  # GET /entries/1/edit
+  def edit; end
 
   # POST /entries or /entries.json
   def create
@@ -54,7 +57,7 @@ class EntriesController < ApplicationController
     @entry = Entry.find(params[:id])
   end
 
-  def set_app
+  def init_app
     app_id = params['entry'][:app_id]
     @app = App.where(id: app_id).first
 
@@ -83,6 +86,6 @@ class EntriesController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def entry_params
-    params.require(:entry).permit(:app_id, :list_id)
+    params.require(:entry).permit(:app_id, :list_id, :remark)
   end
 end

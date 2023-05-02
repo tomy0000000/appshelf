@@ -1,4 +1,9 @@
 <li id="<%= dom_id entry %>">
   <img src="<%= entry.app.artwork %>" alt="Icon of <%= entry.app.name %>" class="app" />
-  <%= link_to entry.app.name, entry %>
+  <div>
+    <%= link_to entry.app.name, entry %>
+    <% if entry.remark %>
+      <blockquote class="long-text remark"><%= entry.remark %></blockquote>
+    <% end %>
+  </div>
 </li>

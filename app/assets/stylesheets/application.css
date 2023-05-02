@@ -32,8 +32,22 @@ p.danger {
   color: var(--danger);
 }
 
-p.app-description {
+.long-text {
   white-space: pre-wrap;
+}
+
+blockquote.remark {
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  display: block;
+  display: -webkit-box;
+  margin-top: calc(var(--typography-spacing-vertical) / 2);
+  margin-bottom: calc(var(--typography-spacing-vertical) / 2);
+  max-height: 8rem;
+  overflow: hidden;
+  padding-top: 0;
+  padding-bottom: 0;
+  text-overflow: ellipsis;
 }
 
 img.brand {

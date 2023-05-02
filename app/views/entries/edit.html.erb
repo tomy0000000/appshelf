@@ -1,0 +1,11 @@
+<section>
+  <%= link_to "Cancel", @entry %>
+</section>
+
+<section>
+  <h1>Editing <%= @entry.app.name %></h1>
+</section>
+
+<section>
+  <%= render "form", entry: @entry %>
+</section>

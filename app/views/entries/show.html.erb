@@ -8,9 +8,14 @@
 </section>
 
 <section>
+  <%= link_to "Edit", edit_entry_path(@entry), role: "button" %>
   <%= link_to "Remove from #{@entry.list.name}", @entry, role: "button", class: "danger", data: { turbo_method: :delete, turbo_confirm: 'Are you sure?', disable_with: "Deleting..." } %>
 </section>
 
 <section>
-  <p class="app-description"><%= @entry.app.description %></p>
+  <% if @entry.remark %>
+    <p class="long-text"><%= @entry.remark %></p>
+    <hr/>
+  <% end %>
+  <p class="long-text"><%= @entry.app.description %></p>
 </section>
