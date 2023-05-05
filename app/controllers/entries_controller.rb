@@ -47,7 +47,9 @@ class EntriesController < ApplicationController
     @entry.destroy
 
     respond_to do |format|
-      format.html { redirect_to @entry.list, status: :see_other, notice: "App was removed from #{@entry.list.name}" }
+      format.html do
+        redirect_to @entry.list, status: :see_other, notice: "#{@entry.app.name} was removed from #{@entry.list.name}"
+      end
       format.json { head :no_content }
     end
   end
@@ -60,17 +62,24 @@ class EntriesController < ApplicationController
   end
 
   def init_app
-    app_id = params['entry'][:app_id]
-    @app = App.where(id: app_id).first
+    app_id = params['entry'][:app_id].scan(/\d{10}/)[0]
+    unless app_id
+      respond_to do |format|
+        format.html do
+          redirect_to list_url(List.find(params['entry'][:list_id])),
+                      alert: "Invalid App ID #{params['entry'][:app_id]}"
+        end
+        format.json { head :no_content }
+      end
+    end
 
+    @app = App.where(id: app_id).first
     return unless @app.nil?
 
-    Rails.logger.debug { 'NEW APP' }
     response = Faraday.get('https://itunes.apple.com/lookup', { id: app_id })
     @body = JSON.parse(response.body)
 
     if response.status != 200 || @body['resultCount'].zero?
-      Rails.logger.debug { "App with ID #{app_id} does not exist" }
       respond_to do |format|
         format.html do
           redirect_to list_url(List.find(params['entry'][:list_id])), alert: "App with ID #{app_id} does not exist"

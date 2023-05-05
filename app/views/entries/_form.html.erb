@@ -1,6 +1,7 @@
 <%= form_with(model: entry) do |form| %>
   <%= form.label :app_id, "App ID" %>
   <%= form.text_field :app_id, value: entry ? entry.app_id : nil, "aria-invalid": entry.errors[:app_id].any? ? true : nil %>
+  <small>or App URL</small>
   <% if entry.errors[:app_id].any? %>
     <% entry.errors.full_messages_for(:app_id).each do |error| %>
       <p class="danger"><small><%= error %></small></p>
