@@ -38,6 +38,7 @@ class User
   # field :unlock_token,    type: String # Only if unlock strategy is :email or :both
   # field :locked_at,       type: Time
 
+  field :public, type: Boolean, default: false
   has_many :lists, dependent: :destroy
 
   # Change login from email to username
