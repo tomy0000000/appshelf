@@ -9,6 +9,7 @@ Rails.application.routes.draw do
   resources :apps
   resources :lists
   resources :entries
+  resources :users, param: :username
 
-  devise_for :users
+  devise_for :users, path: 'auth'
 end
