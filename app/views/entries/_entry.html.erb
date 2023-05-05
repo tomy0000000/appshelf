@@ -2,7 +2,7 @@
   <img src="<%= entry.app.artwork %>" alt="Icon of <%= entry.app.name %>" class="app" />
   <div>
     <%= link_to entry.app.name, entry %>
-    <% if entry.remark %>
+    <% if !entry.remark.blank? %>
       <blockquote class="long-text remark"><%= entry.remark %></blockquote>
     <% end %>
   </div>
