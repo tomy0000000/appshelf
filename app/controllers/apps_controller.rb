@@ -7,10 +7,6 @@ class AppsController < ApplicationController
   before_action :authenticate_user!
   before_action :set_app_lists, only: %i[show update destroy]
 
-  def peak
-    @body = JSON.pretty_generate(@body)
-  end
-
   # GET /apps/1 or /apps/1.json
   def show; end
 

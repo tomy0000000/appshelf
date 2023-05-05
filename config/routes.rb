@@ -7,7 +7,6 @@ Rails.application.routes.draw do
   root 'lists#index'
 
   resources :apps
-  get '/apps/peak/:id', to: 'apps#peak'
   resources :lists
   resources :entries
 
