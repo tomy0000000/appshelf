@@ -4,7 +4,7 @@
 
 <section>
   <img src="<%= @entry.app.artwork %>" alt="Icon of <%= @entry.app.name %>" class="app" />
-  <h1><a href="https://apps.apple.com/app/id<%= @entry.app.id %>" target="_blank"><%= @entry.app.name %></a></h1>
+  <h1><a href="https://apps.apple.com/<%= @entry.app.country %>/app/id<%= @entry.app.id %>" target="_blank"><%= @entry.app.name %></a></h1>
 </section>
 
 <% if current_user and @entry.list.user_id == current_user.id %>

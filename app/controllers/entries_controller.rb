@@ -61,25 +61,33 @@ class EntriesController < ApplicationController
     @entry = Entry.find(params[:id])
   end
 
-  def init_app
-    app_id = params['entry'][:app_id].scan(/\d{10}/)[0]
-    unless app_id
+  def parse_app_id(app_id)
+    match = app_id.match(%r{^((https://)?apps.apple.com/(\w{2})/app(/.+)?/id)?(\d+)$})
+
+    unless match && !match[3].nil? && !match[5].nil?
       respond_to do |format|
         format.html do
           redirect_to list_url(List.find(params['entry'][:list_id])),
-                      alert: "Invalid App ID #{params['entry'][:app_id]}"
+                      alert: "Invalid App ID or URL: #{app_id}"
         end
         format.json { head :no_content }
       end
+      return
     end
+
+    [match[3], match[5]]
+  end
+
+  def init_app
+    country, app_id = parse_app_id(params['entry'][:app_id])
 
     @app = App.where(id: app_id).first
     return unless @app.nil?
 
-    response = Faraday.get('https://itunes.apple.com/lookup', { id: app_id })
+    response = Faraday.get('https://itunes.apple.com/lookup', { id: app_id, country: })
     @body = JSON.parse(response.body)
 
-    if response.status != 200 || @body['resultCount'].zero?
+    if response.status != 200 || @body['resultCount'].zero? || @body['results'][0]['kind'] != 'software'
       respond_to do |format|
         format.html do
           redirect_to list_url(List.find(params['entry'][:list_id])), alert: "App with ID #{app_id} does not exist"
@@ -90,6 +98,7 @@ class EntriesController < ApplicationController
       @app = App.create(id: app_id)
       @app.name = @body['results'][0]['trackName']
       @app.description = @body['results'][0]['description']
+      @app.country = country
       @app.artwork = @body['results'][0]['artworkUrl512']
       @app.save!
     end

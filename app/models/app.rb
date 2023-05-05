@@ -6,6 +6,7 @@ class App
   field :id, type: String
   field :name, type: String
   field :description, type: String
+  field :country, type: String, default: 'us'
   field :artwork, type: String
   has_many :entries, dependent: :destroy
   has_many :lists, dependent: nil
