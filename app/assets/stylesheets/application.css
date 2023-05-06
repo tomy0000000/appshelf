@@ -22,7 +22,8 @@ footer {
   text-align: center;
 }
 
-a.danger {
+a.danger,
+input[type="submit"].danger {
   --primary: #bb2d3b;
   --primary-hover: var(--danger);
   --primary-focus: #b02a37;

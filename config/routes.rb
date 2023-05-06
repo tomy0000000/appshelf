@@ -10,6 +10,7 @@ Rails.application.routes.draw do
   resources :lists
   resources :entries
   resources :users, param: :username
+  get '/users/:username/bye', to: 'users#bye', as: 'user_bye'
 
   devise_for :users, path: 'auth'
 end
