@@ -15,6 +15,8 @@ class EntriesController < ApplicationController
 
   # POST /entries or /entries.json
   def create
+    return unless @app
+
     @entry = Entry.new(entry_params)
     @entry.app = @app
 
@@ -64,7 +66,7 @@ class EntriesController < ApplicationController
   def parse_app_id(app_id)
     match = app_id.match(%r{^((https://)?apps.apple.com/(\w{2})/app(/.+)?/id)?(\d+)$})
 
-    unless match && !match[3].nil? && !match[5].nil?
+    unless match && !match[5].nil?
       respond_to do |format|
         format.html do
           redirect_to list_url(List.find(params['entry'][:list_id])),
@@ -75,11 +77,12 @@ class EntriesController < ApplicationController
       return
     end
 
-    [match[3], match[5]]
+    [match[3].nil? ? 'us' : match[3], match[5]]
   end
 
   def init_app
     country, app_id = parse_app_id(params['entry'][:app_id])
+    return if country.nil? || app_id.nil?
 
     @app = App.where(id: app_id).first
     return unless @app.nil?
@@ -90,7 +93,8 @@ class EntriesController < ApplicationController
     if response.status != 200 || @body['resultCount'].zero? || @body['results'][0]['kind'] != 'software'
       respond_to do |format|
         format.html do
-          redirect_to list_url(List.find(params['entry'][:list_id])), alert: "App with ID #{app_id} does not exist"
+          redirect_to list_url(List.find(params['entry'][:list_id])),
+                      alert: "App ID #{app_id} is valid but app does not exist"
         end
         format.json { head :no_content }
       end
