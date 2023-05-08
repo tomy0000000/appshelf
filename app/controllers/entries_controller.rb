@@ -64,7 +64,7 @@ class EntriesController < ApplicationController
   end
 
   def parse_app_id(app_id)
-    match = app_id.match(%r{^((https://)?apps.apple.com/(\w{2})/app(/.+)?/id)?(\d+)$})
+    match = app_id.match(%r{^((https://)?apps.apple.com/(\w{2})/app(/.+)?/id)?(\d+)?(.*)$})
 
     unless match && !match[5].nil?
       respond_to do |format|
