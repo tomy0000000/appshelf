@@ -6,11 +6,6 @@ class ListsController < ApplicationController
   before_action :check_view, only: %i[show]
   before_action :check_edit, only: %i[edit update destroy]
 
-  # GET /lists or /lists.json
-  def index
-    @lists = List.where(user_id: current_user.id)
-  end
-
   # GET /lists/1 or /lists/1.json
   def show; end
 

@@ -2,9 +2,14 @@
 
 class UsersController < ApplicationController
   before_action :authenticate_user!, except: %i[show]
-  before_action :set_user
+  before_action :set_user, except: %i[index]
   before_action :check_view, only: %i[show]
   before_action :check_modify, only: %i[edit update bye destroy]
+
+  # GET /lists or /lists.json
+  def index
+    redirect_to user_url(current_user.username)
+  end
 
   # GET /users/username or /users/username.json
   def show; end
