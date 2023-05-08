@@ -61,16 +61,17 @@ class ListsController < ApplicationController
   def set_list_apps
     @list = List.find(params[:id])
     @apps = App.find(@list.entries.map(&:app_id))
+    @is_owner = current_user && @list.user_id == current_user.id
   end
 
   def check_view
-    return if @list.public || (current_user && @list.user_id == current_user.id)
+    return if @is_owner || @list.public
 
     render file: Rails.public_path.join('404.html'), status: :not_found, layout: false
   end
 
   def check_edit
-    return if @list.user_id == current_user.id
+    return if @is_owner
 
     render file: Rails.public_path.join('404.html'), status: :not_found, layout: false
   end
