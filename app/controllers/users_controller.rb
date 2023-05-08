@@ -51,16 +51,18 @@ class UsersController < ApplicationController
 
   def set_user
     @user = User.find_by(username: params[:username])
+    @is_owner = current_user && @user.id == current_user.id
+    @lists = @is_owner ? @user.lists.all : @user.lists.where(public: true)
   end
 
   def check_view
-    return if @user.public || (current_user && @user.id == current_user.id)
+    return if @is_owner || @user.public
 
     render file: Rails.public_path.join('404.html'), status: :not_found, layout: false
   end
 
   def check_modify
-    return if @user.id == current_user.id
+    return if @is_owner
 
     render file: Rails.public_path.join('404.html'), status: :not_found, layout: false
   end
