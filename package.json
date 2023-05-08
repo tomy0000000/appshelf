@@ -1,0 +1,15 @@
+{
+  "name": "appshelf",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "install": "bundle install",
+    "console": "bin/rails console",
+    "server": "bin/rails server --binding=0.0.0.0",
+    "test": "bin/rails test",
+    "routes": "bin/rails routes",
+    "format": "bundle exec rubocop -A"
+  },
+  "author": "Tomy Hsieh <npm@tomy.me> (https://github.com/tomy0000000)",
+  "license": "MIT"
+}
