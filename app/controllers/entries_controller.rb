@@ -61,6 +61,7 @@ class EntriesController < ApplicationController
   # Use callbacks to share common setup or constraints between actions.
   def set_entry
     @entry = Entry.find(params[:id])
+    @is_owner = current_user && @entry.list.user_id == current_user.id
   end
 
   def parse_app_id(app_id)
@@ -109,13 +110,13 @@ class EntriesController < ApplicationController
   end
 
   def check_view
-    return if @entry.list.public || (current_user && @entry.list.user_id == current_user.id)
+    return if @is_owner || @entry.list.public
 
     render file: Rails.public_path.join('404.html'), status: :not_found, layout: false
   end
 
   def check_edit
-    return if @entry.list.user_id == current_user.id
+    return if @is_owner
 
     render file: Rails.public_path.join('404.html'), status: :not_found, layout: false
   end
