@@ -61,11 +61,18 @@ class ListsController < ApplicationController
 
   # POST /lists/1/add
   def find_app
-    return unless params[:name] && params[:country]
+    if params[:name].blank? || params[:country].blank?
+      redirect_to list_add_path(@list), alert: 'Please enter a valid app name and country'
+      return
+    end
 
     @apps = AppSearch.call(params[:name], params[:country])
-    respond_to do |format|
-      format.turbo_stream
+    if @apps.nil?
+      redirect_to list_add_path(@list), alert: "No apps name #{params[:name]} found in #{params[:country]}"
+    else
+      respond_to do |format|
+        format.turbo_stream
+      end
     end
   end
 
