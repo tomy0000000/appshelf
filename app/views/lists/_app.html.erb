@@ -1,0 +1,7 @@
+<li>
+  <img src="<%= app['artworkUrl512'] %>" alt="Icon of <%= app['trackName'] %>" class="app" />
+  <div>
+    <p><%= app['trackName'] %></p>
+    <%= button_to "Save to #{@list.name}", entries_path, method: :post, params: { entry: { app_id: app['trackId'], list_id: @list.id } } %>
+  </div>
+</li>

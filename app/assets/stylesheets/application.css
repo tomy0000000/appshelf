@@ -55,15 +55,19 @@ img.brand {
   height: 3rem;
 }
 
-ul.entries {
+ul.apps {
   padding: 0;
 }
 
-ul.entries li {
+ul.apps li {
   display: flex;
   gap: var(--grid-spacing-horizontal);
   align-items: center;
   margin-bottom: var(--typography-spacing-vertical);
+}
+
+ul.apps li div {
+  flex-grow: 1;
 }
 
 img.app {

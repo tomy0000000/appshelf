@@ -8,6 +8,8 @@ Rails.application.routes.draw do
 
   resources :apps
   resources :lists
+  get '/lists/:id/add', to: 'lists#add', as: 'list_add'
+  post '/lists/:id/add', to: 'lists#find_app'
   resources :entries
   resources :users, param: :username
   get '/users/:username/bye', to: 'users#bye', as: 'user_bye'

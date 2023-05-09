@@ -2,9 +2,10 @@
 
 class ListsController < ApplicationController
   before_action :authenticate_user!, except: %i[show]
-  before_action :set_list_apps, only: %i[show edit update destroy]
+  before_action :set_list, only: %i[show edit update destroy add find_app]
+  before_action :set_apps, only: %i[show edit update destroy]
   before_action :check_view, only: %i[show]
-  before_action :check_edit, only: %i[edit update destroy]
+  before_action :check_edit, only: %i[edit update destroy add find_app]
 
   # GET /lists/1 or /lists/1.json
   def show; end
@@ -55,13 +56,29 @@ class ListsController < ApplicationController
     end
   end
 
+  # GET /lists/1/add
+  def add; end
+
+  # POST /lists/1/add
+  def find_app
+    return unless params[:name] && params[:country]
+
+    @apps = AppSearch.call(params[:name], params[:country])
+    respond_to do |format|
+      format.turbo_stream
+    end
+  end
+
   private
 
   # Use callbacks to share common setup or constraints between actions.
-  def set_list_apps
+  def set_list
     @list = List.find(params[:id])
-    @apps = App.find(@list.entries.map(&:app_id))
     @is_owner = current_user && @list.user_id == current_user.id
+  end
+
+  def set_apps
+    @apps = App.find(@list.entries.map(&:app_id))
   end
 
   def check_view

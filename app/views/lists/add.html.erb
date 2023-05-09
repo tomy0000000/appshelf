@@ -1,0 +1,28 @@
+<section>
+  <%= link_to "Back to #{@list.name}", list_path(@list) %>
+</section>
+
+<section>
+  <h1>Add an app by App ID / App URL</h1>
+  <%= render partial: 'entries/form', locals: { entry: @list.entries.build } %>
+</section>
+
+<hr>
+
+<section>
+  <h1>Add an app by name</h1>
+  <%= form_tag url_for(action: 'find_app'), method: :post do %>
+    <%= label_tag 'name' %>
+    <%= search_field_tag 'name' %>
+
+    <%= label_tag 'Country' %>
+    <%= text_field_tag 'country' %>
+
+    <%= submit_tag "Search apps" %>
+  <% end %>
+</section>
+
+<section>
+  <ul id="apps" class="apps">
+  </ul>
+</section>

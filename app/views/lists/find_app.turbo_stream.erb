@@ -1,0 +1,5 @@
+<%= turbo_stream.prepend "apps" do %>
+  <% @apps.each do |app| %>
+    <%= render "app", app: app %>
+  <% end %>
+<% end %>
