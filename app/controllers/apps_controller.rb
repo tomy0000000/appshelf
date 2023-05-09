@@ -1,14 +1,8 @@
 # frozen_string_literal: true
 
-require 'faraday'
-require 'json'
-
 class AppsController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_app_lists, only: %i[show update destroy]
-
-  # GET /apps/1 or /apps/1.json
-  def show; end
+  before_action :set_app, only: %i[update]
 
   # PATCH/PUT /apps/1 or /apps/1.json
   def update
@@ -24,22 +18,11 @@ class AppsController < ApplicationController
     end
   end
 
-  # DELETE /apps/1 or /apps/1.json
-  def destroy
-    @app.destroy
-
-    respond_to do |format|
-      format.html { redirect_to root_path, status: :see_other, notice: 'App deleted.' }
-      format.json { head :no_content }
-    end
-  end
-
   private
 
   # Use callbacks to share common setup or constraints between actions.
-  def set_app_lists
+  def set_app
     @app = App.find(params[:id])
-    @list = List.find(@app.entries.map(&:list_id))
   end
 
   # Only allow a list of trusted parameters through.
