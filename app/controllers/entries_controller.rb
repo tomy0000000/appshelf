@@ -88,10 +88,8 @@ class EntriesController < ApplicationController
     @app = App.where(id: app_id).first
     return unless @app.nil?
 
-    response = Faraday.get('https://itunes.apple.com/lookup', { id: app_id, country: })
-    @body = JSON.parse(response.body)
-
-    if response.status != 200 || @body['resultCount'].zero? || @body['results'][0]['kind'] != 'software'
+    app = AppLookup.call(app_id, country)
+    if app.nil?
       respond_to do |format|
         format.html do
           redirect_to list_url(List.find(params['entry'][:list_id])),
@@ -101,10 +99,10 @@ class EntriesController < ApplicationController
       end
     else
       @app = App.create(id: app_id)
-      @app.name = @body['results'][0]['trackName']
-      @app.description = @body['results'][0]['description']
+      @app.name = app['trackName']
+      @app.description = app['description']
       @app.country = country
-      @app.artwork = @body['results'][0]['artworkUrl512']
+      @app.artwork = app['artworkUrl512']
       @app.save!
     end
   end
