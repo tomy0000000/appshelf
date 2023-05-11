@@ -31,3 +31,5 @@ jobs:
       - name: 🔗 Fetch Environment URL
         id: deployment
         run: echo "page_url=https://$(flyctl certs list --json | jq -r '.[0].Hostname')" >> "$GITHUB_OUTPUT"
+        env:
+          FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
