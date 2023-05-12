@@ -65,9 +65,10 @@ class EntriesController < ApplicationController
   end
 
   def parse_app_id(app_id)
-    match = app_id.match(%r{^((https://)?apps.apple.com/(\w{2})/app(/.+)?/id)?(\d+)?(.*)$})
+    uri = URI(app_id)
+    match = uri.path.match(%r{^(?:/?(?<country>\w{2})?/app(?:/.+)?/id)?(?<app_id>\d+)$})
 
-    unless match && !match[5].nil?
+    unless match && !match[:app_id].nil? # Must have app_id
       respond_to do |format|
         format.html do
           redirect_to list_url(List.find(params['entry'][:list_id])),
@@ -78,7 +79,8 @@ class EntriesController < ApplicationController
       return
     end
 
-    [match[3].nil? ? 'us' : match[3], match[5]]
+    # Default to US if no country code is specified
+    [match[:country].nil? ? 'us' : match[:country], match[:app_id]]
   end
 
   def init_app
