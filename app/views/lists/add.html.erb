@@ -15,8 +15,8 @@
     <%= label_tag 'name' %>
     <%= search_field_tag 'name' %>
 
-    <%= label_tag 'Country' %>
-    <%= text_field_tag 'country' %>
+    <%= label_tag 'country' %>
+    <%= select_tag 'country', options_for_select(@countries, "US") %>
 
     <%= submit_tag "Search apps" %>
   <% end %>

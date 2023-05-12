@@ -6,6 +6,7 @@ class ListsController < ApplicationController
   before_action :set_apps, only: %i[show edit update destroy]
   before_action :check_view, only: %i[show]
   before_action :check_edit, only: %i[edit update destroy add find_app]
+  before_action :load_countries, only: %i[add]
 
   # GET /lists/1 or /lists/1.json
   def show; end
@@ -62,7 +63,7 @@ class ListsController < ApplicationController
   # POST /lists/1/add
   def find_app
     if params[:name].blank? || params[:country].blank?
-      redirect_to list_add_path(@list), alert: 'Please enter a valid app name and country'
+      redirect_to list_add_path(@list), alert: 'Please enter a valid app name'
       return
     end
 
@@ -86,6 +87,14 @@ class ListsController < ApplicationController
 
   def set_apps
     @apps = App.find(@list.entries.map(&:app_id))
+  end
+
+  def load_countries
+    # load countries from JSON file
+    file = Rails.root.join('app/assets/json/countries.json').read
+    @countries = JSON.parse(file)
+    @countries.delete_if { |key, _value| key.to_s.match(/^_(.*)/) }
+    @countries = @countries.invert
   end
 
   def check_view
