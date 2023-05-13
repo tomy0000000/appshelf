@@ -53,6 +53,9 @@ gem 'bootsnap', require: false
 gem 'devise', '~> 4.9', '>= 4.9.2'
 gem 'faraday', '~> 2.5', '>= 2.5.2'
 gem 'mongoid', '~> 8.0', '>= 8.0.2'
+gem 'omniauth', '~> 2.1', '>= 2.1.1'
+gem 'omniauth-google-oauth2', '~> 1.1', '>= 1.1.1'
+gem 'omniauth-rails_csrf_protection', '~> 1.0', '>= 1.0.1'
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem

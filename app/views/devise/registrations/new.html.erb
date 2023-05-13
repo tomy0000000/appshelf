@@ -20,8 +20,5 @@
 
     <%= f.submit "Sign up" %>
   <% end %>
-</section>
-
-<section>
-  <%= render "devise/shared/links" %>
+  <%= button_to  'Sign up with Google', user_google_oauth2_omniauth_authorize_path, method: :post, :data => {turbo: false} %>
 </section>

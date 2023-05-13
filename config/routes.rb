@@ -14,5 +14,5 @@ Rails.application.routes.draw do
   resources :users, param: :username
   get '/users/:username/bye', to: 'users#bye', as: 'user_bye'
 
-  devise_for :users, path: 'auth'
+  devise_for :users, path: 'auth', controllers: { omniauth_callbacks: 'omniauth_callbacks' }
 end
