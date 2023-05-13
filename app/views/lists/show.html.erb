@@ -1,7 +1,9 @@
 <section>
   <hgroup>
     <h2><%= @list.name %></h2>
-    <h3><%= pluralize(@list.entries.count, "App")%> by <strong><%= @list.user.username %></strong></h3>
+    <h3><%= pluralize(@list.entries.count, "App") %>
+      by
+      <strong><%= @list.user.username %></strong></h3>
   </hgroup>
 </section>
 
@@ -9,7 +11,15 @@
   <section>
     <%= link_to "Add App", list_add_path(@list), role: "button" %>
     <%= link_to "Edit", edit_list_path(@list), role: "button" %>
-    <%= link_to "Delete", @list, role: "button", class: "danger", data: { turbo_method: :delete, turbo_confirm: 'Are you sure?', disable_with: "Deleting..." } %>
+    <%= link_to "Delete",
+    @list,
+    role: "button",
+    class: "danger",
+    data: {
+      turbo_method: :delete,
+      turbo_confirm: "Are you sure?",
+      disable_with: "Deleting..."
+    } %>
   </section>
 <% end %>
 

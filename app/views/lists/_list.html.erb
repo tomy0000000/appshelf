@@ -1,6 +1,7 @@
 <li id="<%= dom_id list %>">
   <strong><%= link_to list.name, list %></strong>
   <% if list.description? %>
-    : <%= list.description %>
+    :
+    <%= list.description %>
   <% end %>
 </li>

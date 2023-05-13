@@ -8,7 +8,7 @@
     "server": "bin/rails server --binding=0.0.0.0",
     "test": "bin/rails test",
     "routes": "bin/rails routes",
-    "format": "bundle exec rubocop -A"
+    "format": "bundle exec rubocop -A && bundle exec erb-format app/views/**/*.html.erb --write"
   },
   "author": "Tomy Hsieh <npm@tomy.me> (https://github.com/tomy0000000)",
   "license": "MIT"

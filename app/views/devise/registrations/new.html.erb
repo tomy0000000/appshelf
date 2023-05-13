@@ -12,7 +12,8 @@
     <%= f.label :password %>
     <%= f.password_field :password, autocomplete: "new-password" %>
     <% if @minimum_password_length %>
-    <small><%= @minimum_password_length %> characters minimum</small>
+      <small><%= @minimum_password_length %>
+        characters minimum</small>
     <% end %>
 
     <%= f.label :password_confirmation %>
@@ -20,5 +21,10 @@
 
     <%= f.submit "Sign up" %>
   <% end %>
-  <%= button_to  'Sign up with Google', user_google_oauth2_omniauth_authorize_path, method: :post, :data => {turbo: false} %>
+  <%= button_to "Sign up with Google",
+  user_google_oauth2_omniauth_authorize_path,
+  method: :post,
+  data: {
+    turbo: false
+  } %>
 </section>

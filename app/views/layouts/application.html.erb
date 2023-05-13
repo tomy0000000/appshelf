@@ -5,18 +5,30 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>AppShelf - Decent shelf for decent apps</title>
     <meta name="title" content="AppShelf - Decent shelf for decent apps">
-    <meta name="description" content="Some apps provide great functionality and user experience, but you might not need them to stay on your device all the time. So you put them on the shelf and have them back when you need them.">
-    <meta name="apple-mobile-web-app-capable" content="yes" />
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta
+      name="description"
+      content="Some apps provide great functionality and user experience, but you might not need them to stay on your device all the time. So you put them on the shelf and have them back when you need them."
+    >
+    <meta name="apple-mobile-web-app-capable" content="yes"/>
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
     <meta property="og:type" content="website">
     <meta property="og:url" content="<%= root_url %>">
     <meta property="og:title" content="AppShelf - Decent shelf for decent apps">
-    <meta property="og:description" content="Some apps provide great functionality and user experience, but you might not need them to stay on your device all the time. So you put them on the shelf and have them back when you need them.">
+    <meta
+      property="og:description"
+      content="Some apps provide great functionality and user experience, but you might not need them to stay on your device all the time. So you put them on the shelf and have them back when you need them."
+    >
     <meta property="og:image" content="<%= asset_url("opengraph.png") %>">
     <meta property="twitter:card" content="summary_large_image">
     <meta property="twitter:url" content="<%= root_url %>">
-    <meta property="twitter:title" content="AppShelf - Decent shelf for decent apps">
-    <meta property="twitter:description" content="Some apps provide great functionality and user experience, but you might not need them to stay on your device all the time. So you put them on the shelf and have them back when you need them.">
+    <meta
+      property="twitter:title"
+      content="AppShelf - Decent shelf for decent apps"
+    >
+    <meta
+      property="twitter:description"
+      content="Some apps provide great functionality and user experience, but you might not need them to stay on your device all the time. So you put them on the shelf and have them back when you need them."
+    >
     <meta property="twitter:image" content="<%= asset_url("opengraph.png") %>">
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
@@ -24,7 +36,12 @@
     <link rel="manifest" href="/site.webmanifest">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1.5.10/css/pico.min.css" integrity="sha256-AmkBgnWRWgRJIBCpCCmwuc/mbOWTWKepkFXimo1nQqk=" crossorigin="anonymous">
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/@picocss/pico@1.5.10/css/pico.min.css"
+      integrity="sha256-AmkBgnWRWgRJIBCpCCmwuc/mbOWTWKepkFXimo1nQqk="
+      crossorigin="anonymous"
+    >
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
   </head>
@@ -47,7 +64,12 @@
                 <ul role="listbox">
                   <li><%= link_to "Profile", user_path(current_user.username) %></li>
                   <li><%= link_to "Setting", edit_user_path(current_user.username) %></li>
-                  <li><%= link_to "Sign out", destroy_user_session_path, data: { turbo_method: :delete, turbo_confirm: 'Are you sure you want to sign out?' } %></li>
+                  <li><%= link_to "Sign out",
+                    destroy_user_session_path,
+                    data: {
+                      turbo_method: :delete,
+                      turbo_confirm: "Are you sure you want to sign out?"
+                    } %></li>
                 </ul>
               </details>
             </li>
@@ -64,15 +86,14 @@
       <%= yield %>
     </main>
     <footer class="container">
-      <small
-        >Built with 💎 Ruby on Rails + <a href="https://picocss.com" target="_blank">Pico CSS</a>
+      <small>Built with 💎 Ruby on Rails +
+        <a href="https://picocss.com" target="_blank">Pico CSS</a>
         <br>
-        by <a href="https://github.com/tomy0000000" target="_blank">Tomy Hsieh</a> at 🇹🇭 Bangkok × 🇻🇳 Saigon
+        by
+        <a href="https://github.com/tomy0000000" target="_blank">Tomy Hsieh</a>
+        at 🇹🇭 Bangkok × 🇻🇳 Saigon
         <br>
-        <a href="https://github.com/tomy0000000/appshelf" target="_blank"
-          >Source code</a
-        ></small
-      >
+        <a href="https://github.com/tomy0000000/appshelf" target="_blank">Source code</a></small>
     </footer>
   </body>
 </html>

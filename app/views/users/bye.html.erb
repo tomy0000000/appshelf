@@ -11,7 +11,10 @@
   <%= turbo_frame_tag "user", target: "_top" do %>
     <%= form_with(model: @user, url: user_path(@user.username), method: :delete, data: { turbo_method: :delete, turbo_confirm: 'LAST CHANCE, Are you sure you want to delete your account?', disable_with: "Deleting..." }) do |form| %>
       <%= form.label :username %>
-      <%= form.text_field :username, value: nil, placeholder: @user.username, "aria-invalid": @user.errors[:username].any? ? true : nil %>
+      <%= form.text_field :username,
+                      value: nil,
+                      placeholder: @user.username,
+                      "aria-invalid": @user.errors[:username].any? ? true : nil %>
       <% if @user.errors[:username].any? %>
         <% @user.errors.messages_for(:username).each do |error| %>
           <small><p class="danger"><%= error %></p></small>
