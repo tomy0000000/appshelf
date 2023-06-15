@@ -36,3 +36,14 @@
   <% end %>
   <p class="long-text"><%= @entry.app.description %></p>
 </section>
+
+<script>
+// Overwrite the last history page to the list page
+// so that the back button will always go back to the list page
+// instead of the edit page.
+history.pushState(null, null, "<%= list_path(@entry.list) %>");
+history.pushState(null, null, "<%= entry_path(@entry) %>");
+window.addEventListener("popstate", function (e) {
+  window.location.assign(e.target.location);
+});
+</script>

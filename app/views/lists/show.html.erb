@@ -28,3 +28,14 @@
     <%= render @list.entries %>
   </ul>
 </section>
+
+<script>
+// Overwrite the last history page to the root page
+// so that the back button will always go back to the root page
+// instead of the edit page, app page, or add page.
+history.pushState(null, null, "<%= root_path %>");
+history.pushState(null, null, "<%= list_path(@list) %>");
+window.addEventListener("popstate", function (e) {
+  window.location.assign(e.target.location);
+});
+</script>
