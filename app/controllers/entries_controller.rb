@@ -4,6 +4,7 @@ class EntriesController < ApplicationController
   before_action :authenticate_user!, except: %i[show]
   before_action :set_entry, only: %i[show edit update destroy]
   before_action :init_app, only: %i[create]
+  before_action :prevent_duplicate, only: %i[create]
   before_action :check_view, only: %i[show]
   before_action :check_edit, only: %i[edit update destroy]
 
@@ -87,6 +88,21 @@ class EntriesController < ApplicationController
       @app.country = country
       @app.artwork = app['artworkUrl512']
       @app.save!
+    end
+  end
+
+  def prevent_duplicate
+    return if @app.nil?
+
+    duplicate = Entry.where(list_id: params['entry'][:list_id], app_id: @app.id).first
+    return if duplicate.nil?
+
+    respond_to do |format|
+      format.html do
+        redirect_to list_url(List.find(params['entry'][:list_id])),
+                    alert: "#{duplicate.app.name} is already in this list"
+      end
+      format.json { head :no_content }
     end
   end
 
