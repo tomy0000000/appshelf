@@ -64,27 +64,8 @@ class EntriesController < ApplicationController
     @is_owner = current_user && @entry.list.user_id == current_user.id
   end
 
-  def parse_app_id(app_id)
-    uri = URI(app_id)
-    match = uri.path.match(%r{^(?:/?(?<country>\w{2})?/app(?:/.+)?/id)?(?<app_id>\d+)$})
-
-    unless match && !match[:app_id].nil? # Must have app_id
-      respond_to do |format|
-        format.html do
-          redirect_to list_url(List.find(params['entry'][:list_id])),
-                      alert: "Invalid App ID or URL: #{app_id}"
-        end
-        format.json { head :no_content }
-      end
-      return
-    end
-
-    # Default to US if no country code is specified
-    [match[:country].nil? ? 'us' : match[:country], match[:app_id]]
-  end
-
   def init_app
-    country, app_id = parse_app_id(params['entry'][:app_id])
+    country, app_id = AppIdParser.call(params['entry'][:app_id])
     return if country.nil? || app_id.nil?
 
     @app = App.where(id: app_id).first
