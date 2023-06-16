@@ -3,15 +3,8 @@
 </section>
 
 <section>
-  <img
-    src="<%= @entry.app.artwork %>"
-    alt="Icon of <%= @entry.app.name %>"
-    class="app"
-  />
-  <h1><a
-      href="https://apps.apple.com/<%= @entry.app.country %>/app/id<%= @entry.app.id %>"
-      target="_blank"
-    ><%= @entry.app.name %></a></h1>
+  <%= app_store_icon(@entry) %>
+  <h1><%= app_title(@entry) %></h1>
 </section>
 
 <% if @is_owner %>
@@ -30,10 +23,7 @@
 <% end %>
 
 <section>
-  <% if @entry.remark %>
-    <p class="long-text"><%= @entry.remark %></p>
-    <hr/>
-  <% end %>
+  <%= user_remark(@entry) %>
   <p class="long-text"><%= @entry.app.description %></p>
 </section>
 

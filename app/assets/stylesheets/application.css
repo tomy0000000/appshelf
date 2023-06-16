@@ -33,17 +33,22 @@ p.danger {
   color: var(--danger);
 }
 
+img.app {
+  width: 144px;
+  height: 144px;
+  border-radius: 23px;
+}
+
 .long-text {
   white-space: pre-wrap;
 }
 
-blockquote.remark {
+blockquote.remark-inline {
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 2;
   display: block;
   display: -webkit-box;
-  margin-top: calc(var(--typography-spacing-vertical) / 2);
-  margin-bottom: calc(var(--typography-spacing-vertical) / 2);
+  margin-block: calc(var(--typography-spacing-vertical) / 2);
   max-height: 8rem;
   overflow: hidden;
   padding-top: 0;
@@ -55,23 +60,23 @@ img.brand {
   height: 3rem;
 }
 
+/* List show */
+
 ul.apps {
   padding: 0;
 }
 
-ul.apps li {
+li.entry {
   display: flex;
   gap: var(--grid-spacing-horizontal);
   align-items: center;
   margin-bottom: var(--typography-spacing-vertical);
 }
 
-ul.apps li div {
-  flex-grow: 1;
+li.entry a {
+  flex-shrink: 0;
 }
 
-img.app {
-  width: 144px;
-  height: 144px;
-  border-radius: 23px;
+li.entry a.details-btn {
+  margin-block: calc(var(--typography-spacing-vertical) / 2);
 }
