@@ -1,6 +1,7 @@
 {
   "files.exclude": {
     "bin/**": true, // binaries to use, but not edit
-    "lib/**": true // legacy usage, don't use this
-  }
+    "lib/**": true, // legacy usage, don't use this
+    "db/**": true // MongoDB don't use this
+  },
 }
