@@ -55,11 +55,13 @@ class User
   end
 
   def self.from_google(google_params)
-    user = User.find_by(google_uid: google_params[:uid])
+    user = User.where(google_uid: google_params[:uid]).first
 
     return user unless user.nil?
 
-    User.create!(google_uid: google_params[:uid], username: google_params[:name])
+    existed = User.where(username: google_params[:name]).first
+    username = existed ? "#{google_params[:name]}#{rand(1000)}" : google_params[:name]
+    User.create!(google_uid: google_params[:uid], username:, password: Devise.friendly_token[0, 20])
   end
 
   include Mongoid::Timestamps
