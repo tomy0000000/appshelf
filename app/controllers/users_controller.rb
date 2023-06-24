@@ -41,7 +41,7 @@ class UsersController < ApplicationController
 
         format.html do
           redirect_to new_user_session_path, status: :see_other,
-                                             notice: "#{@user.username} was deleted, we're sad to see you go."
+                                             notice: "#{@user.username} was deleted, we're sad to see you go. 😢"
         end
         format.json { render :show, status: :ok, location: new_user_session_path }
       else

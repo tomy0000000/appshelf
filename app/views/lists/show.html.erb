@@ -3,7 +3,12 @@
     <h2><%= @list.name %></h2>
     <h3><%= pluralize(@list.entries.count, "App") %>
       by
-      <strong><%= @list.user.username %></strong></h3>
+      <% if @list.user.public %>
+        <strong><%= link_to @list.user.username, user_path(@list.user.username) %></strong>
+      <% else %>
+        <strong><%= @list.user.username %></strong>
+      <% end %>
+    </h3>
   </hgroup>
 </section>
 
