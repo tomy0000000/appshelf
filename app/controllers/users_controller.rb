@@ -20,8 +20,16 @@ class UsersController < ApplicationController
   # PATCH/PUT /users/username or /users/username.json
   def update
     respond_to do |format|
-      if @user.update(user_params)
-        format.html { redirect_to user_url(@user.username), notice: 'User setting saved.' }
+      if user_params[:password].present? && @user.update_with_password(user_params)
+        Rails.logger.info 'update user with password'
+        Rails.logger.info user_params
+        bypass_sign_in(@user)
+        format.html { redirect_to user_path(@user.username), notice: 'User setting saved.' }
+        format.json { render :show, status: :ok, location: @user }
+      elsif user_params[:password].blank? && @user.update(user_params.except(:current_password, :password,
+                                                                             :password_confirmation))
+        Rails.logger.info 'update user without password'
+        format.html { redirect_to user_path(@user.username), notice: 'User setting saved.' }
         format.json { render :show, status: :ok, location: @user }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -64,6 +72,7 @@ class UsersController < ApplicationController
     @user = User.find_by(username: params[:username])
     @is_owner = current_user && @user.id == current_user.id
     @lists = @is_owner ? @user.lists.all : @user.lists.where(public: true)
+    @minimum_password_length = User.password_length.min
   end
 
   def check_view
@@ -80,6 +89,6 @@ class UsersController < ApplicationController
 
   # Only allow a user of trusted parameters through.
   def user_params
-    params.require(:user).permit(:username, :public)
+    params.require(:user).permit(:username, :public, :current_password, :password, :password_confirmation)
   end
 end

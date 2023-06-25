@@ -1,9 +1,38 @@
-<%= form_with(model: user, url: user_path(user.username)) do |form| %>
+<%= form_with(model: user, url: user_path(@user.username)) do |form| %>
   <%= form.label :username %>
   <%= form.text_field :username,
-                  "aria-invalid": user.errors[:username].any? ? true : nil %>
-  <% if user.errors[:username].any? %>
-    <% user.errors.full_messages_for(:username).each do |error| %>
+                  "aria-invalid": @user.errors[:username].any? ? true : nil %>
+  <% if @user.errors[:username].any? %>
+    <% @user.errors.full_messages_for(:username).each do |error| %>
+      <p class="danger"><small><%= error %></small></p>
+    <% end %>
+  <% end %>
+
+  <%= form.label :current_password, "Current password" %>
+  <%= form.password_field :current_password %>
+  <small>Enter your current password if you wish to change your password</small>
+  <% if @user.errors[:current_password].any? %>
+    <% @user.errors.full_messages_for(:current_password).each do |error| %>
+      <p class="danger"><small><%= error %></small></p>
+    <% end %>
+  <% end %>
+
+  <%= form.label :password, "New password" %>
+  <%= form.password_field :password, autocomplete: "new-password" %>
+  <% if @minimum_password_length %>
+    <small><%= @minimum_password_length %>
+      characters minimum</small>
+  <% end %>
+  <% if @user.errors[:password].any? %>
+    <% @user.errors.full_messages_for(:password).each do |error| %>
+      <p class="danger"><small><%= error %></small></p>
+    <% end %>
+  <% end %>
+
+  <%= form.label :password_confirmation, "Confirm new password" %>
+  <%= form.password_field :password_confirmation, autocomplete: "new-password" %>
+  <% if @user.errors[:password_confirmation].any? %>
+    <% @user.errors.full_messages_for(:password_confirmation).each do |error| %>
       <p class="danger"><small><%= error %></small></p>
     <% end %>
   <% end %>
@@ -18,7 +47,7 @@
   <%= form.submit "Save" %>
 <% end %>
 
-<% if user.google_uid %>
+<% if @user.google_uid %>
   <%= link_to "Revoke Google Login",
   user_google_revoke_path,
   role: "button",
