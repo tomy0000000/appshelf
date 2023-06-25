@@ -54,11 +54,11 @@ class User
     false
   end
 
-  def self.from_google(google_params)
-    user = User.where(google_uid: google_params[:uid]).first
+  def self.find_where_google(google_params)
+    User.where(google_uid: google_params[:uid]).first
+  end
 
-    return user unless user.nil?
-
+  def self.new_from_google(google_params)
     existed = User.where(username: google_params[:name]).first
     username = existed ? "#{google_params[:name]}#{rand(1000)}" : google_params[:name]
     User.create!(google_uid: google_params[:uid], username:, password: Devise.friendly_token[0, 20])

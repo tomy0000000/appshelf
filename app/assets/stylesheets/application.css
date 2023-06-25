@@ -23,6 +23,7 @@ footer {
 }
 
 a.danger,
+button.danger,
 input[type="submit"].danger {
   --primary: #bb2d3b;
   --primary-hover: var(--danger);

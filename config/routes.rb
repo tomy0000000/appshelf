@@ -13,6 +13,7 @@ Rails.application.routes.draw do
   resources :entries
   resources :users, param: :username
   get '/users/:username/bye', to: 'users#bye', as: 'user_bye'
+  delete '/users/:username/google_revoke', to: 'users#google_revoke', as: 'user_google_revoke'
 
   devise_for :users, path: 'auth', controllers: { omniauth_callbacks: 'omniauth_callbacks' }
 end

@@ -2,13 +2,20 @@
 
 class OmniauthCallbacksController < Devise::OmniauthCallbacksController
   def google_oauth2
-    user = User.from_google(from_google_params)
+    user = User.find_where_google(google_params)
 
     if user.present?
-      sign_out_all_scopes
       flash[:notice] = t 'devise.omniauth_callbacks.success', kind: 'Google'
       sign_in_and_redirect user, event: :authentication
     else
+      if user_signed_in?
+        current_user.update(google_uid: google_params[:uid])
+        flash[:notice] = t 'devise.omniauth_callbacks.success', kind: 'Google'
+        redirect_to edit_user_path current_user.username
+        return
+      end
+
+      User.new_from_google(google_params)
       flash[:alert] =
         t 'devise.omniauth_callbacks.failure', kind: 'Google', reason: 'User is not authorized.'
       redirect_to new_user_session_path
@@ -18,8 +25,8 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
   private
 
   # this is a before_action for google_oauth2
-  def from_google_params
-    @from_google_params ||= {
+  def google_params
+    @google_params ||= {
       uid: auth.uid,
       name: auth.info.name,
       first_name: auth.info.first_name,

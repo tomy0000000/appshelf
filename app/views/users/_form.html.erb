@@ -17,3 +17,22 @@
 
   <%= form.submit "Save" %>
 <% end %>
+
+<% if user.google_uid %>
+  <%= link_to "Revoke Google Login",
+  user_google_revoke_path,
+  role: "button",
+  class: "danger",
+  data: {
+    turbo_method: :delete,
+    turbo_confirm: "Are you sure you want to revoke Google Login?",
+    disable_with: "Revoking..."
+  } %>
+<% else %>
+  <%= button_to "Connect Google Login",
+  user_google_oauth2_omniauth_authorize_path,
+  method: :post,
+  data: {
+    turbo: false
+  } %>
+<% end %>

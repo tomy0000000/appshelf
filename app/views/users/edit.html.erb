@@ -4,5 +4,8 @@
 
 <section>
   <%= render "form", user: current_user %>
+</section>
+
+<section>
   <%= link_to "Delete account", user_bye_path(current_user.username), class: "danger" %>
 </section>

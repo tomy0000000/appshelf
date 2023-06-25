@@ -52,6 +52,12 @@ class UsersController < ApplicationController
     end
   end
 
+  def google_revoke
+    current_user.update(google_uid: nil)
+    flash[:notice] = "Revoked Google's access to your account."
+    redirect_to edit_user_path current_user
+  end
+
   private
 
   def set_user
