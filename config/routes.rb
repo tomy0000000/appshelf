@@ -15,5 +15,7 @@ Rails.application.routes.draw do
   get '/users/:username/bye', to: 'users#bye', as: 'user_bye'
   delete '/users/:username/google_revoke', to: 'users#google_revoke', as: 'user_google_revoke'
 
+  get '/privacy', to: 'application#privacy'
+
   devise_for :users, path: 'auth', controllers: { omniauth_callbacks: 'omniauth_callbacks' }
 end
